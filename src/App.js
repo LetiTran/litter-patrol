@@ -14,6 +14,7 @@ class App extends Component {
     console.log(this.state.bins);
   }
 
+// Change bin state by calling getBinsState every 1500 seconds
   startGame() {
     setInterval(() => {
       this.setState( {
@@ -22,6 +23,7 @@ class App extends Component {
     }, 1500);
   }
 
+// Change visibility of trash inside bin:
   getBinsState() {
     let bins = [];
     for (let i = 0; i < 9; i++){
@@ -32,13 +34,19 @@ class App extends Component {
   }
 
   onTrashClicked = () => {
-    // Fill this in!
+    let updatedPoints = this.state.points;
+    updatedPoints = updatedPoints + 1;
+
+    this.setState( {
+      points: updatedPoints
+    });
   }
 
   render() {
     const bins = this.state.bins.map((bin, index) => {
       return (
-        <Trash key={`trash-${index}`} />
+        //  Invoke Trash componet and pass only key as prop containing index
+        <Trash onTrashClicked={this.onTrashClicked} key={`trash-${index}`} trashStatus={bin.isTrashVisible}/>
       );
     });
 
